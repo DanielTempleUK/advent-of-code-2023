@@ -53,6 +53,10 @@ public class SolutionPart1 {
             arrangements++;
         }
 
+        //TODO: Extend this to find the number of arrangements where it's more than 1.
+        //      Expecting my solution here to involve generating all the possible permutations based on
+        //      the groups and then comparing those to the codex and seeing which ones would match
+
         return arrangements;
     }
 
