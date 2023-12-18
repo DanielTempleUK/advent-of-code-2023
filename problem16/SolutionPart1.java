@@ -12,8 +12,8 @@ public class SolutionPart1 {
     private static final char HORIZONTAL_SPLITTER = '-';
     private static final char LEANING_MIRROR = '\\';
     private static final char FALLING_MIRROR = '/';
-    private static final Integer MAX_X = 109;
-    private static final Integer MAX_Y = 109;
+    private static final Integer MAX_COL = 109;
+    private static final Integer MAX_ROW = 109;
 
     public static void main(String... args) throws Exception {
         Set<PathStartingTile> analysedPathStartingTiles = new HashSet<PathStartingTile>();
@@ -42,7 +42,7 @@ public class SolutionPart1 {
 
             while (currentTile != null) {
                 path.add(currentTile);
-                char tileCharacter = input[currentTile.getY()][currentTile.getX()];
+                char tileCharacter = input[currentTile.getRow()][currentTile.getCol()];
 
                 if(tileCharacter == EMPTY) {
                     currentTile = currentTile.next(direction);
@@ -203,44 +203,44 @@ public class SolutionPart1 {
     }
 
     public static class Tile {
-        private int x;
-        private int y;
+        private int col;
+        private int row;
 
-        public Tile(int x, int y) {
-            this.x = x;
-            this.y = y;
+        public Tile(int col, int row) {
+            this.col = col;
+            this.row = row;
         }
 
-        public int getX() {
-            return this.x;
+        public int getCol() {
+            return this.col;
         }
 
-        public int getY() {
-            return this.y;
+        public int getRow() {
+            return this.row;
         }
 
         public Tile next(Direction direction) throws Exception {
             switch(direction) {
                 case UP :
-                    if(this.y-1 < 0) {
+                    if(this.row-1 < 0) {
                         return null;
                     }
-                    return new Tile(this.x, (this.y-1)); 
+                    return new Tile(this.col, (this.row-1)); 
                 case DOWN :
-                    if(this.y+1 > MAX_Y) {
+                    if(this.row+1 > MAX_ROW) {
                         return null;
                     }
-                    return new Tile(this.x, (this.y+1)); 
+                    return new Tile(this.col, (this.row+1)); 
                 case RIGHT :
-                    if(this.x+1 > MAX_X) {
+                    if(this.col+1 > MAX_COL) {
                         return null;
                     }
-                    return new Tile((this.x+1), this.y); 
+                    return new Tile((this.col+1), this.row); 
                 case LEFT :
-                    if(this.x-1 < 0) {
+                    if(this.col-1 < 0) {
                         return null;
                     }
-                    return new Tile((this.x-1), this.y); 
+                    return new Tile((this.col-1), this.row); 
                 default :
                     throw new Exception("Unrecognised Direction"){};
             }
@@ -248,21 +248,21 @@ public class SolutionPart1 {
 
         @Override
         public int hashCode() {
-            return this.x * this.y;
+            return this.col * this.row;
         }
 
         @Override
         public boolean equals(Object object) {
             if(object instanceof Tile) {
                 final Tile that = (Tile) object;
-                return this.getX() == that.getX() && this.getY() == that.getY();
+                return this.getCol() == that.getCol() && this.getRow() == that.getRow();
             }
             return false;
         }
     }
 
     private static char[][] getInput() {
-        char[][] input = new char[MAX_Y+1][MAX_X+1];
+        char[][] input = new char[MAX_ROW+1][MAX_COL+1];
 
         input[0] = "\\.......\\..//-.............-/....|....../-....|..................................|........--/.................".toCharArray();
 		input[1] = "..|/..-..\\..........\\.....|......\\...-....../...................................................|.../||\\......".toCharArray();
